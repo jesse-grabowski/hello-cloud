@@ -5,6 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      packages: write
     steps:
       - name: Checkout develop
         uses: actions/checkout@v3

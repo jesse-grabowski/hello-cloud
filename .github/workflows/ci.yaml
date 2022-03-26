@@ -1,4 +1,4 @@
-name: Publish specific artifacts
+name: Continuous integration
 on:
   push:
     branches: ['develop']
