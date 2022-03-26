@@ -22,7 +22,7 @@ jobs:
           mvn --batch-mode \
             clean \
             com.amashchenko.maven.plugin:gitflow-maven-plugin:release-start \
-            deploy -DaltDeploymentRepository=github::https://maven.pkg.github.com/${{ github.repository }} \
+            deploy -DaltDeploymentRepository=github::default::https://maven.pkg.github.com/${{ github.repository }} \
             com.amashchenko.maven.plugin:gitflow-maven-plugin:release-finish -DgitFlowConfig.productionBranch=main -DversionDigitToIncrement=1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
