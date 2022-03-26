@@ -23,12 +23,16 @@ jobs:
           cache: 'maven'
       - name: Release package
         run: mvn --batch-mode clean com.amashchenko.maven.plugin:gitflow-maven-plugin:release-start com.amashchenko.maven.plugin:gitflow-maven-plugin:release-finish -DgitFlowConfig.productionBranch=main -DversionDigitToIncrement=1
-      - name: Publish snapshot package
-        uses: ./.github/workflows/publish.yaml
+      - name: Publish package
+        run: mvn --batch-mode deploy -DskipTests -DaltDeploymentRepository=github::default::https://maven.pkg.github.com/${{ github.repository }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Checkout main
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
           ref: 'main'
-      - name: Publish released package
-        uses: ./.github/workflows/publish.yaml
+      - name: Publish package
+        run: mvn --batch-mode deploy -DskipTests -DaltDeploymentRepository=github::default::https://maven.pkg.github.com/${{ github.repository }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
