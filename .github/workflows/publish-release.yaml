@@ -7,16 +7,16 @@ jobs:
       contents: write
       packages: write
     steps:
+      - name: Checkout develop
+        uses: actions/checkout@v3
+        with:
+          ref: 'refs/heads/develop'
       - name: Setup Java / Maven
         uses: actions/setup-java@v2
         with:
           java-version: '11'
           distribution: 'temurin'
           cache: 'maven'
-      - name: Checkout develop
-        uses: actions/checkout@v3
-        with:
-          ref: 'refs/heads/develop'
       - name: Setup Git
         run: |
           git config user.name "github-actions[bot]"
