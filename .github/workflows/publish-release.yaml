@@ -11,7 +11,8 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'
-          distribution: 'adopt'
+          distribution: 'temurin'
+          cache: 'maven'
       - name: Checkout develop
         uses: actions/checkout@v3
         with:
@@ -21,7 +22,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Release package
-        run: mvn --batch-mode clean com.amashchenko.maven.plugin:gitflow-maven-plugin:release -DgitFlowConfig.productionBranch=main -DversionDigitToIncrement=1
+        run: mvn --batch-mode clean com.amashchenko.maven.plugin:gitflow-maven-plugin:release-start com.amashchenko.maven.plugin:gitflow-maven-plugin:release-finish -DgitFlowConfig.productionBranch=main -DversionDigitToIncrement=1
       - name: Checkout main
         uses: actions/checkout@v3
         with:
