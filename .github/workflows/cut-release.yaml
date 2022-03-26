@@ -1,11 +1,10 @@
-name: Publish package to GitHub Packages
+name: Cut and tag release
 on: ['workflow_dispatch']
 jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      packages: write
     steps:
       - name: Checkout develop
         uses: actions/checkout@v3
@@ -24,12 +23,3 @@ jobs:
           cache: 'maven'
       - name: Release package
         run: mvn --batch-mode clean com.amashchenko.maven.plugin:gitflow-maven-plugin:release-start com.amashchenko.maven.plugin:gitflow-maven-plugin:release-finish -DgitFlowConfig.productionBranch=main -DversionDigitToIncrement=1
-      - name: Checkout main
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          ref: 'main'
-      - name: Publish package
-        run: mvn --batch-mode deploy -DaltDeploymentRepository=github::default::https://maven.pkg.github.com/${{ github.repository }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
