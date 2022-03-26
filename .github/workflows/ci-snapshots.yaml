@@ -1,4 +1,4 @@
-name: Publish snapshot artifacts
+name: Publish specific artifacts
 on:
   push:
     branches: ['develop']
@@ -9,7 +9,13 @@ jobs:
       contents: read
       packages: write
     steps:
-      - name: Trigger CI
-        uses: ./.github/workflows/ci-specific.yaml
+      - name: Checkout specific branch
+        uses: actions/checkout@v3
+      - name: Setup Java / Maven
+        uses: actions/setup-java@v2
         with:
-          branch: ${{ github.head_ref }}
+          java-version: '11'
+          distribution: 'temurin'
+          cache: 'maven'
+      - name: Publish snapshot package
+        uses: ./.github/workflows/publish.yaml
