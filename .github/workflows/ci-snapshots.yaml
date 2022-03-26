@@ -1,0 +1,15 @@
+name: Publish snapshot artifacts
+on:
+  push:
+    branches: ['develop']
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Trigger CI
+        uses: ./.github/workflows/ci-specific.yaml
+        with:
+          branch: ${{ github.head_ref }}

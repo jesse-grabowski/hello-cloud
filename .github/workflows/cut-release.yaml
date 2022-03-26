@@ -23,3 +23,11 @@ jobs:
           cache: 'maven'
       - name: Release package
         run: mvn --batch-mode clean com.amashchenko.maven.plugin:gitflow-maven-plugin:release-start com.amashchenko.maven.plugin:gitflow-maven-plugin:release-finish -DgitFlowConfig.productionBranch=main -DversionDigitToIncrement=1
+      - name: Trigger CI
+        uses: ./.github/workflows/ci-specific.yaml
+        with:
+          branch: main
+      - name: Trigger CI
+        uses: ./.github/workflows/ci-specific.yaml
+        with:
+          branch: develop

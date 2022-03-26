@@ -1,7 +1,10 @@
-name: Publish artifacts
+name: Publish specific artifacts
 on:
-  push:
-    branches: ['develop', 'main']
+  workflow_call:
+    inputs:
+      branch:
+        required: true
+        type: string
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -9,8 +12,11 @@ jobs:
       contents: read
       packages: write
     steps:
-      - name: Checkout branch
+      - name: Checkout specific branch
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: ${{ inputs.branch }}
       - name: Setup Java / Maven
         uses: actions/setup-java@v2
         with:
