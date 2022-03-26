@@ -10,23 +10,24 @@ jobs:
       - name: Checkout develop
         uses: actions/checkout@v3
         with:
-          ref: 'refs/heads/develop'
+          fetch-depth: 0
+          ref: 'develop'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Setup Java / Maven
         uses: actions/setup-java@v2
         with:
           java-version: '11'
           distribution: 'temurin'
           cache: 'maven'
-      - name: Setup Git
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Release package
         run: mvn --batch-mode clean com.amashchenko.maven.plugin:gitflow-maven-plugin:release-start com.amashchenko.maven.plugin:gitflow-maven-plugin:release-finish -DgitFlowConfig.productionBranch=main -DversionDigitToIncrement=1
       - name: Checkout main
         uses: actions/checkout@v3
         with:
-          ref: 'refs/heads/main'
+          fetch-depth: 0
+          ref: 'main'
       - name: Publish package
         run: mvn --batch-mode deploy -DaltDeploymentRepository=github::default::https://maven.pkg.github.com/${{ github.repository }}
         env:
