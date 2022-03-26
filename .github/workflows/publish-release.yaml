@@ -7,22 +7,29 @@ jobs:
       contents: write
       packages: write
     steps:
-      - uses: actions/setup-java@v2
-        with:
-          java-version: '11'
-          distribution: 'adopt'
       - name: Checkout develop
         uses: actions/checkout@v3
         with:
-          ref: 'refs/heads/develop'
-      - name: Release package
+          fetch-depth: 0
+          ref: 'develop'
+      - name: Setup Git
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          mvn --batch-mode \
-            clean \
-            com.amashchenko.maven.plugin:gitflow-maven-plugin:release-start \
-            deploy -DaltDeploymentRepository=github::default::https://maven.pkg.github.com/${{ github.repository }} \
-            com.amashchenko.maven.plugin:gitflow-maven-plugin:release-finish -DgitFlowConfig.productionBranch=main -DversionDigitToIncrement=1
+      - name: Setup Java / Maven
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: 'maven'
+      - name: Release package
+        run: mvn --batch-mode clean com.amashchenko.maven.plugin:gitflow-maven-plugin:release-start com.amashchenko.maven.plugin:gitflow-maven-plugin:release-finish -DgitFlowConfig.productionBranch=main -DversionDigitToIncrement=1
+      - name: Checkout main
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: 'main'
+      - name: Publish package
+        run: mvn --batch-mode deploy -DaltDeploymentRepository=github::default::https://maven.pkg.github.com/${{ github.repository }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
