@@ -23,6 +23,6 @@ jobs:
             clean \
             com.amashchenko.maven.plugin:gitflow-maven-plugin:release-start \
             deploy -DaltDeploymentRepository=github::default::https://maven.pkg.github.com/${{ github.repository }} \
-            com.amashchenko.maven.plugin:gitflow-maven-plugin:release-finish -DfetchRemote=false -DgitFlowConfig.productionBranch=main -DversionDigitToIncrement=1
+            com.amashchenko.maven.plugin:gitflow-maven-plugin:release-finish -DfetchRemote=false -DgitFlowConfig.productionBranch=refs/heads/main -DversionDigitToIncrement=1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
