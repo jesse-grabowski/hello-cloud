@@ -31,6 +31,11 @@ jobs:
         run: mvn --batch-mode -DskipTests -DaltDeploymentRepository=github::default::https://maven.pkg.github.com/${{ github.repository }} deploy 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Where is everything
+        run: |
+          pwd
+          ls -la
+          ls -la ./target
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
