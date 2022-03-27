@@ -29,13 +29,13 @@ resource sites 'Microsoft.Web/sites@2021-03-01' = {
   }
 
   resource staging 'slots' = {
-    name: '${appname}-staging'
+    name: 'staging'
     location: location
     properties: {}
   }
 
   resource sandbox 'slots' = {
-    name: '${appname}-sandbox'
+    name: 'sandbox'
     location: location
     properties: {}
   }
