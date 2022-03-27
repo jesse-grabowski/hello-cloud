@@ -31,7 +31,7 @@ jobs:
             -DaltDeploymentRepository=github::default::https://maven.pkg.github.com/${{ github.repository }} \
             -DargLine="-DaltDeploymentRepository=github::default::https://maven.pkg.github.com/${{ github.repository }}" \
             clean \
-            com.amashchenko.maven.plugin:gitflow-maven-plugin:release
+            com.amashchenko.maven.plugin:gitflow-maven-plugin:release \
             deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
