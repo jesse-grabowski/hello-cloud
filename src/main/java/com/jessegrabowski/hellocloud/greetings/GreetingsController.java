@@ -14,4 +14,8 @@ public class GreetingsController {
         return "Hello, ".concat(name);
     }
 
+    @GetMapping(path = "/goodbye", produces = MediaType.TEXT_PLAIN_VALUE)
+    public @ResponseBody String goodbye(@RequestParam(required = false, name = "name", defaultValue = "World") String name) {
+        return "Goodbye, ".concat(name);
+    }
 }
