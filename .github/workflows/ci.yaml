@@ -1,9 +1,14 @@
-name: Continuous integration
+name: Continuous Integration
 on:
   push:
     branches: ['develop']
+  workflow_run:
+    workflows: ['Release and Tag']
+    types:
+      - completed
 jobs:
-  publish:
+  ci:
+    name: Continuous Integration
     runs-on: ubuntu-latest
     permissions:
       contents: read
