@@ -21,6 +21,6 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
       - name: Publish package
-        run: mvn --batch-mode deploy -DskipTests -DaltDeploymentRepository=github::default::https://maven.pkg.github.com/${{ github.repository }}
+        run: mvn --batch-mode -DskipTests -DaltDeploymentRepository=github::default::https://maven.pkg.github.com/${{ github.repository }} deploy 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
