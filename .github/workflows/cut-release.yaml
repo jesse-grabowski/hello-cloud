@@ -29,6 +29,7 @@ jobs:
             -DversionDigitToIncrement=1 \
             -DpostReleaseGoals=deploy \
             -DaltDeploymentRepository=github::default::https://maven.pkg.github.com/${{ github.repository }} \
+            -DargLine="-DaltDeploymentRepository=github::default::https://maven.pkg.github.com/${{ github.repository }}"
             clean \
             com.amashchenko.maven.plugin:gitflow-maven-plugin:release
             deploy
